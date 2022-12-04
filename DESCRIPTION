@@ -32,6 +32,7 @@ Depends:
     R (>= 4.0)
 LazyData: true
 URL: https://github.com/arturhgq/ead,
+    https://arturhgq.github.io/ead/
 BugReports: https://github.com/arturhgq/ead/issues
 Remotes: 
     arturhgq/dtools
