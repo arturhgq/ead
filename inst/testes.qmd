@@ -1,0 +1,141 @@
+---
+title: "Testes de consistência da tipologia"
+author: "Artur Quirino"
+format:
+  html:
+    code-fold: true
+    code-tools: true
+---
+## Sobre 
+
+Este documento reune testes de consistência feitos durante o processo de elaboração 
+da tipologia `ead`.
+
+## Dados
+
+```{r, cache= TRUE, output = FALSE}
+
+library(ead)
+
+ead_typology(
+  vdem,
+  .countries = country_name,
+  .year = year,
+  .typology_p = regime,
+  .typology_d = regime2,
+  .reg_info = reg_info,
+  .reg_end_type = reg_end_type,
+  .index = IDE,
+  .all_vars = T
+) |>
+  purrr::map(
+    ~ .x |> 
+      dplyr::filter(year >= 1900)
+  ) -> data
+```
+
+## Testes
+
+### Casos de sobreposição
+
+### Codificação de casos de colapso democrático
+
+Todos os casos de colapso democrático foram codificados?  
+```{r}
+teste |> 
+  dplyr::filter(regime2_type_change %in% "1-0") |> 
+  dplyr::mutate(
+    teste_ = dplyr::if_else(
+      regime2_type_change %in% "1-0" & stringr::str_detect(aut, "democratic breakdown"),
+      "1",
+      paste0("check_", aut_id)
+    )
+  ) |> 
+  dplyr::distinct(teste_) |> 
+  dplyr::pull()
+```
+
+Todos os casos de colapso identificados em ROW que não são captados por ead foram considerados?
+```{r}
+teste |> 
+  dplyr::filter(ROW_regime_change_aut %in% 1) |> 
+  dplyr::mutate(
+    teste_ = dplyr::if_else(
+      ROW_regime_change_aut %in% 1 & aut %in% "democratic breakdown",
+      "Sim",
+      "Não"
+    )
+  ) |> 
+  dplyr::distinct(teste_) |> 
+  dplyr::pull()
+```
+
+Existem casos de "colapso democrático" codificados como "aprofundamento autoritário"
+ou "retrocesso democrático" porque o momento de mudança de regime ocorreu antes ou
+depois do indice de democracia começar a variar?
+
+```{r}
+# Check manual
+teste |> 
+  dplyr::filter(
+    teste == 1
+  ) |> 
+  dplyr::select(
+    country_name,
+    year,
+    cumulative,
+    aut,
+    regime2_type_change,
+    ROW_regime_change_aut
+  ) -> check
+```
+
+Todo golpe inaugura um novo regime?
+
+```{r}
+ead::data |> 
+  dplyr::select(country_name, reg_info, coups) |> 
+  tidyr::drop_na(coups) |> 
+  dplyr::count(reg_info, country_name, coups) |> 
+  dplyr::filter(n > 1)
+```
+
+Em um mesmo regime há mais de um caso de golpe ou de autogolpe?
+```{r}
+ead::data |> 
+  dplyr::select(country_name, reg_info, coups) |> 
+  tidyr::drop_na(coups) |> 
+  dplyr::mutate(
+    coups = dplyr::case_when(
+      coups %in% c("coup", "autogolpe") ~ "golpe/autogolpe"
+    )
+  ) |> 
+  dplyr::count(reg_info, country_name, coups) |> 
+  dplyr::filter(n > 1)
+```
+
+Existem casos de golpes e autogolpes que precedem ou sucedem casos de mudança de regime captados pela tipologia?
+
+```{r}
+# Identificação das observações que precedem e sucedem os episódios codificados 
+ead::data |> 
+  dplyr::mutate(
+    teste = dplyr::case_when(
+      !is.na(aut_id) ~ 1,
+      !is.na(dplyr::lead(aut_id)) ~ 1,
+      !is.na(dplyr::lag(aut_id)) ~ 1#,
+      #!is.na(dem_id) ~ 1,
+      #!is.na(dplyr::lead(dem_id)) ~ 1,
+      #!is.na(dplyr::lag(dem_id)) ~ 1
+    ),
+    teste2 = dplyr::case_when(
+      teste == 1 & !is.na(coups) & is.na(aut_id) ~ 1
+    )
+  ) -> teste
+
+teste |> 
+  dplyr::filter(
+    teste2 == 1
+  ) -> recode_cases
+```
+

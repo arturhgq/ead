@@ -1,0 +1,79 @@
+url: https://arturhgq.github.io/ead/
+home:
+  title: Episódios de autocratização e democratização
+authors:
+  Artur Quirino:
+    href: https://arturhgq.com
+template:
+  bootstrap: 5
+  bslib:
+    primary: '#476b6b'
+    bg: '#f8f9f9'
+    fg: '#293d3d'
+    code-bg: '#d6dcdc'
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+    code_font:
+      google: Fira Code
+navbar:
+  structure:
+    left:
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right:
+    - search
+    - github
+  components:
+    github:
+      icon: fa-github
+      href: http://github.com/arturhgq/ead
+      aria-label: GitHub
+    articles:
+      text: Articles
+      menu:
+      - text: Tutorials
+      - text: How to use ead?
+        href: articles/How-to-use-ead-.html
+development:
+  mode: auto
+reference:
+- title: Tipologia
+  desc: Funções para estimar e classificar episódios de mudança de regime
+  contents:
+  - typology
+  - epi_build
+  - row_update
+  - add_coups
+- title: Codificação macro
+  contents: epi_identify
+- title: Codificação micro
+  desc: Funções que compõem `epi_identify()`.
+  contents:
+  - group_start
+  - group_end
+  - cumulative_sum
+  - epi_progress
+  - epi_coding
+  - glue_coding
+  - epi_id
+- title: Medidas macro
+  contents: ead_measures
+- title: Medidas micro
+  desc: Funções que compõem `ead_measures()`.
+  contents:
+  - measures_exprs
+  - start_epi
+  - pre_group
+  - extend_group
+  - final_group
+  - pre_episodes
+  - pre_events
+- title: Outros
+  contents:
+  - ead_messages
+  - vdem
+  - data
+

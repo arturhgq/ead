@@ -1,0 +1,70 @@
+---
+title: "How to use ead?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How-to-use-ead-}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# v-DEM data
+
+## Installing the package
+```{r, eval= F}
+remotes::install_github("arturhgq/ead")
+```
+
+# building the typology
+```{r, eval= FALSE}
+
+ead::typology(
+  ead::vdem, 
+  .countries = country_name,
+  .year = year,
+  .typology_p = regime,
+  .typology_d = regime2,
+  .reg_info = reg_info,
+  .reg_end_type = reg_end_type,
+  .aut_parameters = list(
+    .threshold = -0.01,
+    .define_epi = list(
+      .stop = 3, 
+      .keep = 2,
+      .cumulative = -0.1, 
+      .before = 1,
+      .after = 1, 
+      .before_value = -0.009,
+      .after_value = -0.009),
+    .events = list(
+      .forward = c(-0.0099, -0.006), 
+      .stagnant = c(-0.0059,
+    0.0059), 
+    .backward = 0.0059)
+  ),
+  .dem_parameters = list(
+    .threshold = 0.01,
+    .define_epi = list(
+      .stop = 3,
+      .keep = 2,
+      .cumulative = 0.1,
+      .before = 1,
+      .after = 1, 
+      .before_value = 0.009,
+      .after_value = 0.009),
+    .events = list(
+      .forward = c(0.006, 0.0099), 
+      .stagnant = c(-0.0059, 0.0059),
+      .backward = -0.0059)
+  ),
+  .index = IDE, 
+  .add_coups = TRUE, 
+  .all_vars = TRUE
+) -> typology
+```
