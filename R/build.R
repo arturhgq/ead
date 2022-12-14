@@ -133,7 +133,7 @@ epi_identify <- \(.data, ..., .index, .define_epi, .measure, .row_update) {
           .countries = !!.args_quo[['.countries']],
           .typology_d = !!.args_quo[['.typology_d']],
           .typology_p = !!.args_quo[['.typology_p']],
-          .index = .index_enquo
+          .index = !!.index_enquo
         ),
       isFALSE(.row_update) ~
         cli::cli_abort(

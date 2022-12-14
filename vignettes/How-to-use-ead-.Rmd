@@ -14,14 +14,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# v-DEM data
-
-## Installing the package
+# Installing the package
 ```{r, eval= F}
 remotes::install_github("arturhgq/ead")
 ```
 
-# building the typology
+# Building the typology
 ```{r, eval= FALSE}
 
 ead::typology(

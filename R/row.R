@@ -21,11 +21,9 @@ row_update <- \(.data, ...) {
   rlang::quos(...) -> .args_quo
 
   .data |>
-    dplyr::mutate(
-      change_IDE = !!.args_quo[[".index"]] - dplyr::lag(!!.args_quo[[".index"]])
-    ) |>
     dplyr::group_by(!!.args_quo[[".countries"]]) |>
     dplyr::mutate(
+      change_IDE = !!.args_quo[[".index"]] - dplyr::lag(!!.args_quo[[".index"]]),
       regime_old := !!.args_quo[[".typology_p"]],
       regime2_old := !!.args_quo[[".typology_d"]],
       regime_subtype_change = dplyr::case_when(

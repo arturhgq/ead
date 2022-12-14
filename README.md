@@ -33,8 +33,7 @@ master’s thesis.
 ## How to use it?
 
 If you are interested in estimating episodes of regime change yourself,
-using customs parameters, see the vignette [“How to use
-ead?”](articles/How-to-use-ead-.html).
+using customs parameters, see the vignette “How to use ead?”.
 
 ## Acknowledgments
 
