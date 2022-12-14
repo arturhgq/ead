@@ -12,8 +12,8 @@ row_update(.data, ...)
 \item{...}{Variáveis que devem ser especificadas
 \itemize{
 \item \code{.countries} = países
-\item \code{typology_d} = ROW classifição dicotômica
-\item \code{typology_p} = ROW classificação policotômica
+\item \code{.typology_d} = ROW classifição dicotômica
+\item \code{.typology_p} = ROW classificação policotômica
 \item \code{.index} = Índice de Democracia Eleitoral
 }}
 }

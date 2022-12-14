@@ -12,8 +12,8 @@
 #' @param .data Banco de dados
 #' @param ... Variáveis que devem ser especificadas
 #' * \code{.countries} = países
-#' * \code{typology_d} = ROW classifição dicotômica
-#' * \code{typology_p} = ROW classificação policotômica
+#' * \code{.typology_d} = ROW classifição dicotômica
+#' * \code{.typology_p} = ROW classificação policotômica
 #' * \code{.index} = Índice de Democracia Eleitoral
 #' @export
 

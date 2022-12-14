@@ -23,8 +23,8 @@ remotes::install_github("arturhgq/ead")
 ## What is ead?
 
 `ead` is a Portuguese acronym for episodes of autocratisation and
-democratisation. Within this package, the `ead_typology` function codify
-six different types of regime change: autocracy deepening, democratic
+democratisation. Within this package, the `typology` function codify six
+different types of regime change: autocracy deepening, democratic
 backsliding, democratic breakdown, liberalization, democratic transition
 and democratic deepening. The tipology is heavily based on Lührmann et
 al. (2018) and Maerz et al. (2021) research and is fully described in my
