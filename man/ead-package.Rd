@@ -11,7 +11,8 @@ ead codifica episódios de mudança de regime.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/arturhgq/ead,}
+  \item \url{https://github.com/arturhgq/ead}
+  \item \url{https://arturhgq.github.io/ead/}
   \item Report bugs at \url{https://github.com/arturhgq/ead/issues}
 }
 

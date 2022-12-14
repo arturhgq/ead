@@ -3,29 +3,27 @@
 #'
 #' Esta função flexibiliza o ponto de corte usado na codificação de
 #' regimes políticos e desconsidera as transições que resultam de variações
-#' anuais em e-DEM contidas no intervalo \[-0.05; 0.05\] para todos os
+#' anuais no Índice de Democracia Eleitoral contidas no intervalo \[-0.05; 0.05\] para todos os
 #' casos em que tais episódios sucedem imediatamente um retorno ao regime
 #' anterior. Em outros termos, transições de regime com duração de um ano, fruto
-#' de variações de 5% em e-DEM são descartadas. Argumento que
+#' de variações de 5% no Índice de Democracia Eleitoral são descartadas. Argumento que
 #' essas transições devem ser tratadas como ruídos, pois o próprio conceito de
 #' regime político pressupõe um mínimo de continuidade no tempo. (Schedler, 2013).
-#' @inheritParams typology
 #' @param .data Banco de dados
+#' @param ... Variáveis que devem ser especificadas
+#' * \code{.countries} = países
+#' * \code{typology_d} = ROW classifição dicotômica
+#' * \code{typology_p} = ROW classificação policotômica
+#' * \code{.index} = Índice de Democracia Eleitoral
 #' @export
 
-row_update <- \(.data, ..., .index) {
+row_update <- \(.data, ...) {
   rlang::quos(...) -> .args_quo
-  rlang::as_name(.index) -> .index_string
 
-  if (.index_string != "IDE") {
-    .data |>
-      dplyr::mutate(
-        change_IDE = IDE - dplyr::lag(IDE)
-      ) -> data_
-  } else {
-    .data -> data_
-  }
-  data_ |>
+  .data |>
+    dplyr::mutate(
+      change_IDE = !!.args_quo[[".index"]] - dplyr::lag(!!.args_quo[[".index"]])
+    ) |>
     dplyr::group_by(!!.args_quo[[".countries"]]) |>
     dplyr::mutate(
       regime_old := !!.args_quo[[".typology_p"]],
